@@ -1,0 +1,21 @@
+.bg-image{
+    background-image: url('./Image/Bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 100vh;
+}
+
+.bg-login{
+    background-color: #1c1c36;
+    /* background:linear-gradient(to right,#1c1c36,#1c1c36, white);  */
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.logo-spbe{
+    background-image: url(./Image/spbe.png);
+    /* margin:px; */
+    background-repeat: no-repeat;
+    background-position: center center;
+}

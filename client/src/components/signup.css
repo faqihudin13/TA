@@ -1,0 +1,14 @@
+.bg-image{
+    background-image: url('./Image/Bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 100vh;
+}
+
+
+.bg-signup{
+    background-color: #1c1c36;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
