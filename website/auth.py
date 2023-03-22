@@ -7,8 +7,9 @@ import ast
 from flask import request
 import os
 from website import response
-from datetime import datetime,timedelta
+import datetime
 from flask_jwt_extended import *
+
 
 
 auth = Blueprint('auth', __name__)
@@ -19,6 +20,14 @@ def singleObject(data):
     }
 
     return data
+
+@auth.route('/facerecog', methods=['GET', 'POST'])
+def facerecog():
+    if request.method=='POST':
+        data_string = request.data.decode("UTF-8")
+        data = ast.literal_eval(data_string)
+        print(data)
+    return{'status':True}
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -35,13 +44,16 @@ def login():
                 #flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
                 # return {'status':True, 'message':'Berhasil'}
-                data = singleObject(user)
-                futuredates = datetime.now()+timedelta(days=7)
-                acces_token = create_access_token(data, fresh=True, expires_delta= futuredates)
-                refresh_token = create_refresh_token(data, expires_delta=futuredates)
+                data_2 = singleObject(user)
+                # futuredates = datetime.now()+timedelta(days=7)
+                expires = datetime.timedelta(days=7)
+                expires_refresh = datetime.timedelta(days=7)
+
+                acces_token = create_access_token(data, fresh=True, expires_delta= expires)
+                refresh_token = create_refresh_token(data, expires_delta=expires_refresh)
                 return response.success({
                     "status":True,
-                    "data" : data,
+                    "data" : data_2,
                     "access_token" : acces_token,
                     "refresh_token" : refresh_token,
                 }, "Sukses Login!")
@@ -65,35 +77,42 @@ def logout():
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
-        data_string = request.data.decode("UTF-8")
-        data = ast.literal_eval(data_string)
-        email = data['email']
-        password1 = data['password1']
-        password2 = data['password2']
-
-        user = User.query.filter_by(email=email).first()
-        if user:
-            #flash('Email already exists.', category='error')
-            return {'status':False, 'message':'Email already exists.'}
-        elif len(email) < 4:
-            #flash('Email must be greater than 3 characters.', category='error')
-            return {'status':False, 'message':'Email must be greater than 3 characters.'}
-        # elif len(nama) < 3:
-        #     #flash('NIK must be greater than 16.', category='error')
-        #     return {'status':False, 'message':'Name must be greater than 3 characters'}
-        elif password1 != password2:
-            #flash('Passwords don\'t match.', category='error')
-            return {'status':False, 'message':'Password Dont match.'}
-        elif len(password1) < 7:
-            #flash('Password must be at least 7 characters.', category='error')
-            return {'status':False, 'message':'Password Dont match.'}
-        else:
-            new_user = User(email=email, password=generate_password_hash(
-                password1, method='sha256'))
-            db.session.add(new_user)
-            db.session.commit()
-            login_user(new_user, remember=True)
-            #flash('Account created!', category='success')
-            return {'status':True, 'message':'Account Created'}
+        try:
+            data_string = request.data.decode("UTF-8")
+            data = ast.literal_eval(data_string)
+            while image == data[''] or email ==data[''] or password1 ==data[''] or password2 ==data[''] :
+                image = data['image']
+                email = data['email']
+                password1 = data['password1']
+                password2 = data['password2']
+        except:
+            return{'message': 'Email dan password belum di isi '}
+        try:
+            user = User.query.filter_by(email=email).first()
+            if user:
+                #flash('Email already exists.', category='error')
+                return {'status':False, 'message':'Email already exists.'}
+            elif len(email) < 4:
+                #flash('Email must be greater than 3 characters.', category='error')
+                return {'status':False, 'message':'Email must be greater than 3 characters.'}
+            # elif len(nama) < 3:
+            #     #flash('NIK must be greater than 16.', category='error')
+            #     return {'status':False, 'message':'Name must be greater than 3 characters'}
+            elif password1 != password2:
+                #flash('Passwords don\'t match.', category='error')
+                return {'status':False, 'message':'Password Dont match.'}
+            elif len(password1) < 7:
+                #flash('Password must be at least 7 characters.', category='error')
+                return {'status':False, 'message':'Password Dont match.'}
+            else:
+                new_user = User(email=email,image=image, password=generate_password_hash(
+                    password1, method='sha256'))
+                db.session.add(new_user)
+                db.session.commit()
+                login_user(new_user, remember=True)
+                #flash('Account created!', category='success')
+                return {'status':True, 'message':'Account Created'}
+        except:
+            return{'message':'email dan password belum diisi'}
 
     return {'status':False, 'message':''}

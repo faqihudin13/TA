@@ -4,7 +4,6 @@ import Webcam from 'react-webcam';
 import './webcam.css';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { MDBCardImage } from 'mdb-react-ui-kit';
 
 const WebcamCapture = () => {
   const webcamRef = React.useRef(null);
@@ -15,16 +14,14 @@ const WebcamCapture = () => {
     facingMode: 'user'
   };
   const[name, setName] = useState('')
-  const[image,setImage] = useState('')
   const capture = React.useCallback(
   () => {
     const imageSrc = webcamRef.current.getScreenshot();
-    setImage(imageSrc)
     console.log(`imageSrc = ${imageSrc}`)
                 //for deployment, you should put your backend url / api
-    axios.post('http://127.0.0.1:5000/facerecog', {image:imageSrc})
+    axios.post('https://mynicholas.my.id/api', {data : imageSrc})
     	  .then(res => {
-      	  console.log(`response = ${res.data}`)
+      	  console.log(res.data)
       	  setName(res.data)
     })
     	  .catch(error => {
@@ -47,7 +44,7 @@ const WebcamCapture = () => {
       </div>
       <div className='webcam'>
         <Webcam
-      audio = {false}
+        audio = {false}
       height = {500}
       ref = {webcamRef}
       screenshotFormat = "image/jpeg"

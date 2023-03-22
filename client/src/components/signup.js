@@ -1,9 +1,12 @@
 import React from 'react';
 import Auth_service from '../service/auth.service';
-import { useState } from 'react';
+import { useState,useRef } from 'react';
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import './signup.css'
+import Camera from './webcamsgn';
+import Webcam from "react-webcam";
+
 import {
   MDBBtn,
   MDBContainer,
@@ -19,29 +22,15 @@ from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 
 function Signup() {
-  // const navigate = useNavigate();
-  // const [email, setEmail] = useState('');
-  // const [pass1, setPass1] = useState('');
-  // const [pass2, setPass2] = useState('');
-  // const [NIK, setNIK] = useState('');
 
-  // const handleSignup = async () => {
-  //   const res = Auth_service.signup(NIK,email,pass1,pass2);
-  //   if (res.status='True'){
-  //     navigate('/login');
-  //   }
-  //   else{
-  //     console.log(res.message);
-  //   }
-  // }
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
-  // const [name, setName] = useState('');
 
   const handleSignup = async () => {
     const res = await Auth_service.signup(email,pass1,pass2);
+    console.log(res)
     console.log(res?.status);
     if (res.status  === true){
       navigate('/login');
@@ -50,7 +39,6 @@ function Signup() {
       navigate('/Signup');
     }
   }
-
 
   return (
     <MDBContainer fluid className='bg-image'>
@@ -72,18 +60,6 @@ function Signup() {
 
               <h2 className="fw-bold mb-5">Sign up</h2>
 
-              {/* <MDBRow>
-                <MDBCol col='6'>
-                  <MDBInput wrapperClass='mb-4' label='NIK' id='form1' type='text'onChange={(e)=>{setNIK(e.target.value)}}/>
-                </MDBCol>
-
-                <MDBCol col='6'>
-                  <MDBInput wrapperClass='mb-4' label='Last name' id='form1' type='text' />
-                </MDBCol>
-              </MDBRow> */}
-
-              {/* <MDBInput wrapperClass='mb-4' label='NIK' id='form1' type='text' onChange={(e)=>{setNIK(e.target.value)}}/> */}
-              {/* <MDBInput wrapperClass='mb-4' label='Name' id='form1' type='text' onChange={(e)=>{setName(e.target.value)}}/> */}
               <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' onChange={(e)=>{setEmail(e.target.value)}}/>
               <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' onChange={(e)=>{setPass1(e.target.value)}}/>
               <MDBInput wrapperClass='mb-4' label='Re-enter Your Password' id='form1' type='password' onChange={(e)=>{setPass2(e.target.value)}}/>
@@ -101,6 +77,10 @@ function Signup() {
 
             </MDBCardBody>
           </MDBCard>
+
+          <div className='container'>
+            <Camera/>
+          </div>
         </MDBCol>
       </MDBRow>
       

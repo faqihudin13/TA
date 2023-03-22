@@ -27,7 +27,7 @@ function Login() {
     const res = await Auth_service.login(email,pass);
     console.log(res?.status);
     console.log(res)
-    if (res.status  === true){
+    if (res.data.status  === true){
       localStorage.setItem('isLogin', res?.status);
       navigate('/facerecog');
     }
