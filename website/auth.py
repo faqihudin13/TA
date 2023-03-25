@@ -80,6 +80,7 @@ def sign_up():
         data_string = request.data.decode("UTF-8")
         data = ast.literal_eval(data_string)
         print(data)
+        username = data['username']
         email = data['email']
         image = data['imageUrl']
         password1 = data['password1']
@@ -87,21 +88,16 @@ def sign_up():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            flash('Email already exists.', category='error')
             return {'status':False, 'message':'Email already exists.'}
+        elif len(username)<4 :
+            return{'status': False, 'message': 'username must be greater than 3 characters'}
         elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
             return {'status':False, 'message':'Email must be greater than 3 characters.'}
-        # elif len(NIK) < 16:
-        #     flash('NIK must be greater than 16.', category='error')
-        #     return {'status':False, 'message':'Email already exists.'}
         elif len (image) < 3 :
             return{'status':False}
         elif password1 != password2:
-            flash('Passwords don\'t match.', category='error')
             return {'status':False, 'message':'Password Dont match.'}
         elif len(password1) < 7:
-            flash('Password must be at least 7 characters.', category='error')
             return {'status':False, 'message':'Email already exists.'}
         else:
             new_user = User(email=email,image=image, password=generate_password_hash(
@@ -109,47 +105,7 @@ def sign_up():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            flash('Account created!', category='success')
             return {'status':True, 'message':'Account Created'}
 
     return {'status':False, 'message':''}
-    # if request.method == 'POST':
-    #     try:
-    #         data_string = request.data.decode("UTF-8")
-    #         data = ast.literal_eval(data_string)
-    #         while image == data[''] or email ==data[''] or password1 ==data[''] or password2 ==data[''] :
-    #             image = data['image']
-    #             email = data['email']
-    #             password1 = data['password1']
-    #             password2 = data['password2']
-    #     except:
-    #         return{'message': 'Email dan password belum di isi '}
-    #     try:
-    #         user = User.query.filter_by(email=email).first()
-    #         if user:
-    #             #flash('Email already exists.', category='error')
-    #             return {'status':False, 'message':'Email already exists.'}
-    #         elif len(email) < 4:
-    #             #flash('Email must be greater than 3 characters.', category='error')
-    #             return {'status':False, 'message':'Email must be greater than 3 characters.'}
-    #         # elif len(nama) < 3:
-    #         #     #flash('NIK must be greater than 16.', category='error')
-    #         #     return {'status':False, 'message':'Name must be greater than 3 characters'}
-    #         elif password1 != password2:
-    #             #flash('Passwords don\'t match.', category='error')
-    #             return {'status':False, 'message':'Password Dont match.'}
-    #         elif len(password1) < 7:
-    #             #flash('Password must be at least 7 characters.', category='error')
-    #             return {'status':False, 'message':'Password Dont match.'}
-    #         else:
-    #             new_user = User(email=email,image=image, password=generate_password_hash(
-    #                 password1, method='sha256'))
-    #             db.session.add(new_user)
-    #             db.session.commit()
-    #             login_user(new_user, remember=True)
-    #             #flash('Account created!', category='success')
-    #             return {'status':True, 'message':'Account Created'}
-    #     except:
-    #         return{'message':'email dan password belum diisi'}
-
-    # return {'status':False, 'message':''}
+   

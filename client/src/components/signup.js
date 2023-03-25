@@ -30,9 +30,10 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
+  const [username, setUsername] = useState('');
 
   const handleSignup = async () => {
-    const res = await Auth_service.signup(email,pass1,pass2, imageUrl);
+    const res = await Auth_service.signup(username,email,pass1,pass2, imageUrl);
     console.log(res)
     console.log(res?.status);
     if (res.status  === true){
@@ -62,7 +63,7 @@ function Signup() {
             <MDBCardBody className='p-5 w-100 d-flex flex-column text-center'>
 
               <h2 className="fw-bold mb-5">Sign up</h2>
-
+              <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text' onChange={(e)=>{setUsername(e.target.value)}}/>
               <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' onChange={(e)=>{setEmail(e.target.value)}}/>
               <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' onChange={(e)=>{setPass1(e.target.value)}}/>
               <MDBInput wrapperClass='mb-4' label='Re-enter Your Password' id='form1' type='password' onChange={(e)=>{setPass2(e.target.value)}}/>
