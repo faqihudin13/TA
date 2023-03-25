@@ -7,25 +7,26 @@ const videoConstraints = {
   facingMode: "environment"
 };
  
-const Camera = () => {
+const Camera = (props) => {
+  const { imageUrl, setImageUrl } = props;
+  
+  
   const webcamRef = useRef(null);
-  const [url, setUrl] = React.useState(null);
-
 
   const capturePhoto = React.useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot();
-    let image = imageSrc
-    console.log(image)
-    // console.log(imageSrc)
-    axios.post('http://127.0.0.1:5000/facerecog', {image:imageSrc})
-      .then(res => {
-        console.log(res.data)
-        // setName(res.data)
-})
-    .catch(error => {
-        console.log(`error = ${error}`)
-})
-    setUrl(imageSrc);
+//     let image = imageSrc
+//     // console.log(image)
+//     // console.log(imageSrc)
+//     axios.post('http://127.0.0.1:5000/facerecog', {image:imageSrc})
+//       .then(res => {
+//         console.log(res.data)
+//         // setName(res.data)
+// })
+//     .catch(error => {
+//         console.log(`error = ${error}`)
+// })
+    setImageUrl(imageSrc);
   }, [webcamRef]);
  
   const onUserMedia = (e) => {
@@ -42,10 +43,11 @@ const Camera = () => {
         onUserMedia={onUserMedia}
       />
       <button onClick={capturePhoto}>Capture</button>
-      <button onClick={() => setUrl(null)}>Refresh</button>
-      {url && (
+      <button onClick={() => setImageUrl(null)}>Refresh</button>
+      {imageUrl && (
         <div>
-          <img src={url} alt="Screenshot" />
+          <img src={imageUrl} alt="Screenshot" />
+          
         </div>
       )}
     </>

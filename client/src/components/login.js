@@ -33,7 +33,7 @@ function Login() {
     }
     else{
       localStorage.setItem('isLogin', false);
-      navigate('/Signup');
+      navigate('/Signupnew');
     }
   }
   

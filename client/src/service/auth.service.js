@@ -12,9 +12,9 @@ const login = (email, password) => {
     )
 };
 
-const signup = (email, password1,password2) => {
+const signup = (email, password1,password2, imageUrl) => {
     return(
-        axios.post('http://127.0.0.1:5000/sign-up',{email,password1,password2})
+        axios.post('http://127.0.0.1:5000/sign-up',{email,password1,password2, imageUrl})
             .then(res=>{
                 return res.data;
             })

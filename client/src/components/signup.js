@@ -24,12 +24,15 @@ import { useNavigate } from 'react-router-dom';
 function Signup() {
 
   const navigate = useNavigate();
+
+  const [imageUrl, setImageUrl] = useState('')
+  console.log(imageUrl)
   const [email, setEmail] = useState('');
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
 
   const handleSignup = async () => {
-    const res = await Auth_service.signup(email,pass1,pass2);
+    const res = await Auth_service.signup(email,pass1,pass2, imageUrl);
     console.log(res)
     console.log(res?.status);
     if (res.status  === true){
@@ -79,7 +82,7 @@ function Signup() {
           </MDBCard>
 
           <div className='container'>
-            <Camera/>
+            <Camera imageUrl={imageUrl} setImageUrl={setImageUrl} />
           </div>
         </MDBCol>
       </MDBRow>
