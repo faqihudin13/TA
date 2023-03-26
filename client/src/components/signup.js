@@ -56,6 +56,11 @@ function Signup() {
           </MDBContainer>
         </Navbar>
       <MDBRow className='d-flex justify-content-center align-items-center'>
+        <MDBCol>
+          <div className='container'>
+            <Camera imageUrl={imageUrl} setImageUrl={setImageUrl} />
+          </div>
+        </MDBCol>
         <MDBCol col='6'>
           {/* <div className="p-5 bg-image" style={{backgroundImage: 'url(https://mdbootstrap.com/img/new/textures/full/171.jpg)', height: '300px'}}></div> */}
           <MDBCard className='my-5 mx-auto bg-glass' style={{borderRadius:'2rem',maxWidth:'500px'}}>
@@ -82,9 +87,7 @@ function Signup() {
             </MDBCardBody>
           </MDBCard>
 
-          <div className='container'>
-            <Camera imageUrl={imageUrl} setImageUrl={setImageUrl} />
-          </div>
+          
         </MDBCol>
       </MDBRow>
       

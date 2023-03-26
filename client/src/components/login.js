@@ -19,6 +19,11 @@ from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const initialState={
+    isAuthenticated : false,
+    user:null ,
+    token: null
+  }
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');

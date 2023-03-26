@@ -1,7 +1,11 @@
 import React from "react";
 import axios from 'axios';
 
-
+const initialState={
+    isAuthenticated : false,
+    user:null ,
+    token: null
+}
 const login = (email, password) => {
     return(
         axios.post('http://127.0.0.1:5000/login',{email, password})
