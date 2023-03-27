@@ -21,9 +21,12 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const initialState={
     isAuthenticated : false,
-    user:null ,
+    username:null ,
     token: null
   }
+  // const [username,setUsername] =useState('')
+  // const [token,setToken] = useState('')
+  const [data, setData] = useState(initialState)
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
@@ -31,14 +34,22 @@ function Login() {
   const handleLogin = async () => {
     const res = await Auth_service.login(email,pass);
     console.log(res?.status);
-    console.log(res)
+    console.log(res.status)
     if (res.data.status  === true){
-      localStorage.setItem('isLogin', res?.status);
+      setData({
+        ...data,
+        isAuthenticated:true,
+        username:res.data.email,
+        token:res.access_token
+      })
+      localStorage.setItem('isAuthenticated', data.isAuthenticated)
+      localStorage.setItem('Token', res?.data.access_token)
+      localStorage.setItem('isLogin', JSON.stringify(res.data.status));
       navigate('/facerecog');
     }
     else{
       localStorage.setItem('isLogin', false);
-      navigate('/Signupnew');
+      navigate('/signup');
     }
   }
   

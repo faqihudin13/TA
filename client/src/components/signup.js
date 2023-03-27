@@ -26,7 +26,6 @@ function Signup() {
   const navigate = useNavigate();
 
   const [imageUrl, setImageUrl] = useState('')
-  console.log(imageUrl)
   const [email, setEmail] = useState('');
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');

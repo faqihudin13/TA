@@ -89,7 +89,7 @@ def sign_up():
         user = User.query.filter_by(email=email).first()
         if user:
             return {'status':False, 'message':'Email already exists.'}
-        elif len(username)<4 :
+        elif len(username)<2 :
             return{'status': False, 'message': 'username must be greater than 3 characters'}
         elif len(email) < 4:
             return {'status':False, 'message':'Email must be greater than 3 characters.'}
@@ -100,7 +100,7 @@ def sign_up():
         elif len(password1) < 7:
             return {'status':False, 'message':'Email already exists.'}
         else:
-            new_user = User(email=email,image=image, password=generate_password_hash(
+            new_user = User(username=username,email=email,image=image, password=generate_password_hash(
                 password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
