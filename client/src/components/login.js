@@ -34,7 +34,7 @@ function Login() {
   const handleLogin = async () => {
     const res = await Auth_service.login(email,pass);
     console.log(res?.status);
-    console.log(res.status)
+    console.log(res)
     if (res.data.status  === true){
       setData({
         ...data,
@@ -42,14 +42,13 @@ function Login() {
         username:res.data.email,
         token:res.access_token
       })
-      localStorage.setItem('isAuthenticated', data.isAuthenticated)
+      localStorage.setItem('isAuthenticated', res.data.status)
       localStorage.setItem('Token', res?.data.access_token)
       localStorage.setItem('isLogin', JSON.stringify(res.data.status));
       navigate('/facerecog');
     }
     else{
-      localStorage.setItem('isLogin', false);
-      navigate('/signup');
+      localStorage.setItem('isLogin', JSON.stringify(false));
     }
   }
   

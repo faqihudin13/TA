@@ -46,8 +46,8 @@ def login():
                 # return {'status':True, 'message':'Berhasil'}
                 data_2 = singleObject(user)
                 # futuredates = datetime.now()+timedelta(days=7)
-                expires = datetime.timedelta(days=7)
-                expires_refresh = datetime.timedelta(days=7)
+                expires = datetime.timedelta(seconds=10)
+                expires_refresh = datetime.timedelta(seconds=10)
 
                 acces_token = create_access_token(data, fresh=True, expires_delta= expires)
                 refresh_token = create_refresh_token(data, expires_delta=expires_refresh)
@@ -59,13 +59,12 @@ def login():
                 }, "Sukses Login!")
             else:
                 #flash('Incorrect password, try again.', category='error')
-                return {'status':False, 'message':'Incorrect password, try again.' }
+                return response.success({'status':False }, "Incorrect password, try again.") 
         else:
             #flash('Email does not exist.', category='error')
-            return {'status':False, 'message':'Email does not exist.'}
+            return response.success({'status':False }, "Email does not exist.")
 
-    return {'status':False, 'message':''}
-
+    return response.success({'status':False }, '')
 
 @auth.route('/logout')
 @login_required
