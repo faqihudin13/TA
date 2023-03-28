@@ -6,6 +6,9 @@ const initialState={
     user:null ,
     token: null
 }
+const facerecog=()=>{
+    
+}
 const login = (email, password) => {
     return(
         axios.post('http://127.0.0.1:5000/login',{email, password})

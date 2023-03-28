@@ -19,6 +19,7 @@ from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  localStorage.clear()
   const initialState={
     isAuthenticated : false,
     username:null ,
@@ -48,7 +49,7 @@ function Login() {
       navigate('/facerecog');
     }
     else{
-      localStorage.setItem('isLogin', JSON.stringify(false));
+      navigate('/signup');
     }
   }
   

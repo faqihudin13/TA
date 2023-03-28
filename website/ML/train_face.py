@@ -34,6 +34,7 @@ def train_face(image, name):
     # pass the blob through the NN and obtain the detections
     ssd.setInput(blob)
     detections = ssd.forward()
+    
     if len(detections) > 0:
         # we're making the assumption that each image has ONLY ONE face,
         # so find the bounding box with the largest probability
@@ -70,14 +71,21 @@ def train_face(image, name):
 
                 face = expand_dims(face, axis=0)
                 signature = facenet.predict(face)
+                # signature_list = signature.tolist()
+                signature_str = np.array2string(signature)
 
                 label = name
                 name_output = label
 
+                res = cv2.rectangle(imagebgr, (startX, startY), (endX, endY), (0, 0, 255), 4)
+                image_rgb = cv2.cvtColor(res, cv2.COLOR_BGR2RGB)
+                imagergb_encode = cv2.imencode('.jpeg', image_rgb)[1]
+                image_base64_byte = base64.b64encode(imagergb_encode)
+                image_output = str(image_base64_byte, 'utf-8')
             except:
-                continue
+                pass
 
-    return (image_output, name_output, signature)
+    return (image_output, name_output, signature_str)
 
 
 '''

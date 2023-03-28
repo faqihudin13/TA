@@ -8,7 +8,11 @@ import { MDBCardImage } from 'mdb-react-ui-kit';
 
 const WebcamCapture = () => {
   const webcamRef = React.useRef(null);
-  
+  const initialState={
+    isAuthenticated:false
+  }
+  const[data,setData] =useState(initialState)
+  const[isAuthenticated,setIsAuthenticaded]= useState('')
   const videoConstraints = {
     width : 200,
     height : 200,
@@ -33,13 +37,19 @@ const WebcamCapture = () => {
   }, 
    [webcamRef]
   );
-  const navigate = useNavigate();
-  if ({name}  === 'faqih'){
-    navigate('/card');
-  }
-  else{
-    navigate('/login');
-  }
+  // localStorage.getItem()
+  // const navigate = useNavigate();
+  // if ({name}  === 'faqih'){
+  //   navigate('/card');
+  // }
+  // else{
+  //   navigate('/login');
+  // }
+  const isLogin = localStorage.getItem('isLogin') || false;
+    console.log(isLogin)
+    if(isLogin === false) {
+      return <Navigate to='/login'/>
+    }
   return (
     <div className='webcam-container'>
       <div className='facerecog'>

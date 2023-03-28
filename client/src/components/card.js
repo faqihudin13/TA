@@ -2,7 +2,7 @@ import React ,{useState} from 'react'
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import  Container  from "react-bootstrap/Container";
-import { Navigate } from 'react-router-dom';
+import { Navigate,useNavigate } from 'react-router-dom';
 import'./card.css'
 
 
@@ -11,12 +11,15 @@ const Card = () => {
     //   if(!isLogin){
     //       return <Navigate to='/login'/>;
     //   }
+    const navigate=useNavigate()
+    const [auth,setAuth] = useState('false')
     const[name, setName] = useState('Anya')
     const[job, setJob] = useState('Esper')
     const[about, setAbout] = useState('Anya Forger is a character from the anime Spy x Family[1]. She has shoulder-length, light pink hair that curls inwards with a fringe that reaches just above her eyes and a small strand of ahoge at the top of her head.')
 
     const isLogin = localStorage.getItem('isLogin') || false;
-    if(!isLogin) {
+    console.log(isLogin)
+    if(isLogin === false) {
       return <Navigate to='/login'/>
     }
     return(

@@ -9,8 +9,8 @@ import os
 from website import response
 import datetime
 from flask_jwt_extended import *
-
-
+from .ML.train_face import train_face
+from .ML.recog_face import recog_face
 
 auth = Blueprint('auth', __name__)
 
@@ -48,7 +48,7 @@ def login():
                 # futuredates = datetime.now()+timedelta(days=7)
                 expires = datetime.timedelta(seconds=10)
                 expires_refresh = datetime.timedelta(seconds=10)
-
+        
                 acces_token = create_access_token(data, fresh=True, expires_delta= expires)
                 refresh_token = create_refresh_token(data, expires_delta=expires_refresh)
                 return response.success({
@@ -84,6 +84,8 @@ def sign_up():
         image = data['imageUrl']
         password1 = data['password1']
         password2 = data['password2']
+        image_output, name_output, signature_str=train_face(image,username) 
+        signature = str(signature_str)
 
         user = User.query.filter_by(email=email).first()
         if user:
@@ -99,7 +101,7 @@ def sign_up():
         elif len(password1) < 7:
             return {'status':False, 'message':'Email already exists.'}
         else:
-            new_user = User(username=username,email=email,image=image, password=generate_password_hash(
+            new_user = User(username=username,email=email,signature= signature, password=generate_password_hash(
                 password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
