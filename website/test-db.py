@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
-import train_face
-import recog_face
+import pyperclip
+from ML.train_face import train_face
+from ML.recog_face import recog_face
 import numpy as np
 
 
@@ -63,9 +64,9 @@ session.commit()
 # print(signature2)
 # print(type(signature2))
 
-# res = signature2-signature2
-# print(res)
+# # res = signature2-signature2
+# # print(res)
 
-# image_output, name_output, facenet_score, result = recog_face(image2, name2, signature1)
+# image_output, facenet_score, result = recog_face(image2, signature1)
 # print(facenet_score)
 # print(result)

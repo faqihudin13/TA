@@ -83,6 +83,7 @@ def train_face(image, name):
                 image_base64_byte = base64.b64encode(imagergb_encode)
                 image_output = str(image_base64_byte, 'utf-8')
             except:
+                print('gagal')
                 pass
 
     return (image_output, name_output, signature_str)

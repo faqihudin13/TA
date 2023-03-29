@@ -30,7 +30,7 @@ function Signup() {
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
   const [username, setUsername] = useState('');
-
+  console.log(username,email,pass1,imageUrl)
   const handleSignup = async () => {
     const res = await Auth_service.signup(username,email,pass1,pass2, imageUrl);
     console.log(res)

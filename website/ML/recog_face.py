@@ -76,7 +76,7 @@ def recog_face (image, signature_db):
                 dist = np.linalg.norm(np.subtract(signature_db,signature))
                 if dist < min_dist:
                     min_dist = dist
-                    identity = name
+                    # identity = name
 
                 facenet_score = ((20 - dist)/20)*100
                 facenet_score = round(facenet_score, 2)
