@@ -26,7 +26,10 @@ def facerecog():
     if request.method=='POST':
         data_string = request.data.decode("UTF-8")
         data = ast.literal_eval(data_string)
-        print(data)
+        image = data['imageSrc']
+        image_output, name_output, signature_str=recog_face(image,username) 
+        signature = str(signature_str)
+        print(image)
     return{'status':True}
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -46,11 +49,11 @@ def login():
                 # return {'status':True, 'message':'Berhasil'}
                 data_2 = singleObject(user)
                 # futuredates = datetime.now()+timedelta(days=7)
-                expires = datetime.timedelta(seconds=10)
-                expires_refresh = datetime.timedelta(seconds=10)
+                expires = datetime.timedelta(days=10)
+                expires_refresh = datetime.timedelta(days=10)
         
-                acces_token = create_access_token(data, fresh=True, expires_delta= expires)
-                refresh_token = create_refresh_token(data, expires_delta=expires_refresh)
+                acces_token = create_access_token(data_2, fresh=True, expires_delta= expires)
+                refresh_token = create_refresh_token(data_2, expires_delta=expires_refresh)
                 return response.success({
                     "status":True,
                     "data" : data_2,
@@ -88,8 +91,6 @@ def sign_up():
         signature = str(signature_str)
 
         user = User.query.filter_by(email=email).first()
-        if len(signature)<2 :
-            return{'status':False}
         if user:
             return {'status':False, 'message':'Email already exists.'}
         elif len(username)<2 :

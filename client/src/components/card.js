@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import  Container  from "react-bootstrap/Container";
 import { Navigate,useNavigate } from 'react-router-dom';
 import'./card.css'
-
+import { isExpired, decodeToken } from "react-jwt";
 
 const Card = () => {
     // const isLogin = false;
@@ -16,9 +16,28 @@ const Card = () => {
     const[name, setName] = useState('Anya')
     const[job, setJob] = useState('Esper')
     const[about, setAbout] = useState('Anya Forger is a character from the anime Spy x Family[1]. She has shoulder-length, light pink hair that curls inwards with a fringe that reaches just above her eyes and a small strand of ahoge at the top of her head.')
+    
+    //TOKEN
+    // const token = localStorage.getItem('Token')
+    const token= decodeToken(localStorage.getItem('Token'))
+    const expired = isExpired(token)
+    // const { decodedToken, isExpired, reEvaluateToken } = useJwt(token);
+    // const updateToken = () => {
+    //   const newToken = "A new JWT";
+    //   reEvaluateToken(newToken); // decodedToken and isExpired will be updated
+    // }
+    const date = Date.now()
+    console.log(date)
+    // console.log(expired)
+    console.log(token.exp)
+    if (token.exp * 1000 < date){
+      return <Navigate to='/login'/>
+    }
+
+
 
     const isLogin = localStorage.getItem('isLogin') || false;
-    console.log(isLogin)
+    // console.log(isLogin)
     if(isLogin === false) {
       return <Navigate to='/login'/>
     }

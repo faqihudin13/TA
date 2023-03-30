@@ -1,11 +1,6 @@
 import React from "react";
 import axios from 'axios';
 
-const initialState={
-    isAuthenticated : false,
-    user:null ,
-    token: null
-}
 const facerecog=()=>{
     
 }
@@ -21,7 +16,7 @@ const login = (email, password) => {
 
 const signup = (username,email, password1,password2, imageUrl) => {
     return(
-        axios.post('http://127.0.0.1:5000/sign-up',{username,email,password1,password2, imageUrl})
+        axios.post('http://127.0.0.1:5000/sign-up',{username,email,password1,password2,imageUrl})
             .then(res=>{
                 return res.data;
             })

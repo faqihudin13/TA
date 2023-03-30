@@ -3,13 +3,13 @@ from os import listdir
 from PIL import Image
 from numpy import asarray
 from numpy import expand_dims
-from keras.models import load_model
+# from keras.models import load_model
 import numpy as np
 import io
 import base64
 import cv2
 
-# import pickle
+from deepface.basemodels.Facenet import loadModel
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # image_dir = os.path.join(BASE_DIR, "fotoPeserta")
@@ -19,7 +19,8 @@ model_path = os.path.join(model_dir,'res10_300x300_ssd_iter_140000.caffemodel')
 facenet_path = os.path.join(model_dir,'facenet_keras.h5')
 
 ssd = cv2.dnn.readNetFromCaffe(proto_path, model_path)
-facenet = load_model(facenet_path)
+# facenet = load_model(facenet_path)
+facenet = loadModel()
 # database = {}
 
 def train_face(image, name):
@@ -171,7 +172,6 @@ print(f'[INFO] saved {p} to disk')
 """        
 
 '''
-
 
 
 

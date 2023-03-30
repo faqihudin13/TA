@@ -8,7 +8,8 @@ import {
   MDBCol,
   MDBRow,
   MDBBtn,
-  MDBIcon,
+  MDBValidation,
+  MDBValidationItem,
   MDBInput,
   MDBCheckbox,
   MDBCard,
@@ -48,9 +49,9 @@ function Login() {
       localStorage.setItem('isLogin', JSON.stringify(res.data.status));
       navigate('/facerecog');
     }
-    else{
-      navigate('/signup');
-    }
+    // else{
+    //   navigate('/signup');
+    // }
   }
   
   return (
@@ -74,13 +75,13 @@ function Login() {
         </MDBCol>
           
 
-        <MDBCol col='6' md=''>
+        <MDBCol col='20' md=''>
             <MDBCard className='my-5 mx-auto bg-glass' style={{borderRadius:'2rem',maxWidth:'500px'}}>
           {/* <MDBCard className='mx-5 mb-5 my-5 p-5 shadow-5' style={{marginTop: '-50px', background: 'hsla(0, 0%, 100%, 0.8)', backdropFilter: 'blur(30px)'}}> */}
               
               <MDBCardBody className='p-5 w-100 d-flex flex-column text-center'>
                 <h2 className="fw-bold mb-5">LOGIN</h2>
-
+                
                 <MDBInput wrapperClass='mb-4' label='Email address' id='formControlLg' type='email' size="lg" onChange={(e)=>{setEmail(e.target.value)}}/>
                 <MDBInput wrapperClass='mb-4' label='Password' id='formControlLg' type='password' size="lg" onChange={(e)=>{setPass(e.target.value)}}/>
 

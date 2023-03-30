@@ -15,17 +15,17 @@ const Camera = (props) => {
 
   const capturePhoto = React.useCallback(async () => {
     const imageSrc = webcamRef.current.getScreenshot();
-//     let image = imageSrc
-//     // console.log(image)
-//     // console.log(imageSrc)
-//     axios.post('http://127.0.0.1:5000/facerecog', {image:imageSrc})
-//       .then(res => {
-//         console.log(res.data)
-//         // setName(res.data)
-// })
-//     .catch(error => {
-//         console.log(`error = ${error}`)
-// })
+    let image = imageSrc
+    // console.log(image)
+    // console.log(imageSrc)
+    axios.post('http://127.0.0.1:5000/facerecog', {image:imageSrc})
+      .then ( res => {
+        console.log(res.data)
+        // setName(res.data)
+})
+    .catch(error => {
+        console.log(`error = ${error}`)
+})
     setImageUrl(imageSrc);
   }, [webcamRef]);
  

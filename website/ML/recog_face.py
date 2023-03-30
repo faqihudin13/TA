@@ -3,11 +3,13 @@ from os import listdir
 from PIL import Image
 from numpy import asarray
 from numpy import expand_dims
-from keras.models import load_model
+# from keras.models import load_model
 import numpy as np
 import io
 import base64
 import cv2
+
+from deepface.basemodels.Facenet import loadModel
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # image_dir = os.path.join(BASE_DIR, "fotoPeserta")
@@ -17,9 +19,11 @@ model_path = os.path.join(model_dir,'res10_300x300_ssd_iter_140000.caffemodel')
 facenet_path = os.path.join(model_dir,'facenet_keras.h5')
 
 ssd = cv2.dnn.readNetFromCaffe(proto_path, model_path)
-facenet = load_model(facenet_path)
+# facenet = load_model(facenet_path)
+facenet = loadModel()
 
 def recog_face (image, signature_db):
+    signature_db = np.fromstring(signature_db[2:-2], sep=' ')
     b = bytes(image, 'utf-8')
     image = b[b.find(b'/9'):]
     im = Image.open(io.BytesIO(base64.b64decode(image)))
@@ -73,7 +77,7 @@ def recog_face (image, signature_db):
                 min_dist=20
                 identity=' '
                 # dist = np.linalg.norm(signature_db-signature)
-                dist = np.linalg.norm(np.subtract(signature_db,signature))
+                dist = np.linalg.norm((signature_db-signature))
                 if dist < min_dist:
                     min_dist = dist
                     # identity = name
