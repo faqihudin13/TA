@@ -21,16 +21,19 @@ def singleObject(data):
 
     return data
 
+
 @auth.route('/facerecog', methods=['GET', 'POST'])
 def facerecog():
     if request.method=='POST':
         data_string = request.data.decode("UTF-8")
         data = ast.literal_eval(data_string)
         image = data['imageSrc']
-        image_output, name_output, signature_str=recog_face(image,username) 
-        signature = str(signature_str)
-        print(image)
-    return{'status':True}
+        email = data['email']
+        user = User.query.filter_by(email=email).first()
+        signature_db =user.signature
+        print(signature_db)
+        image_output, facenet_score, result=recog_face(image,signature_db) 
+    return{'image':image_output,'facenet':facenet_score,'result':result}
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
