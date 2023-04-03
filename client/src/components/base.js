@@ -16,7 +16,6 @@ function Navbar_main() {
       <>
       <BrowserRouter>
         <Routes>
-          
           <Route path="card" element={<Card/>}>
           </Route>
           <Route path="login" element={<Login/>}>
@@ -29,7 +28,7 @@ function Navbar_main() {
           </Route>
           <Route path="coba" element={<Coba/>}>
           </Route>
-          <Route path="/" element={<Home/>}>
+          <Route path="/" element={<Login/>}>
           </Route>
   
         </Routes>

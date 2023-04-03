@@ -35,7 +35,6 @@ function Login() {
 
   const handleLogin = async () => {
     const res = await Auth_service.login(email,pass);
-    console.log(res?.status);
     console.log(res)
     if (res.data.status  === true){
       setData({

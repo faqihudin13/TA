@@ -96,7 +96,7 @@ def recog_face (image, signature_db):
 
                 # name_output = name
 
-                if facenet_score > 50:
+                if facenet_score > 80:
                     result = "true"
                 else:
                     result = "false"

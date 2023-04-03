@@ -26,11 +26,11 @@ function Signup() {
   const navigate = useNavigate();
 
   const [imageUrl, setImageUrl] = useState('')
+  const boundingBox = useState('')
   const [email, setEmail] = useState('');
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
   const [username, setUsername] = useState('');
-  console.log(username,email,pass1,imageUrl)
   const handleSignup = async () => {
     const res = await Auth_service.signup(username,email,pass1,pass2, imageUrl);
     console.log(res)
@@ -55,8 +55,11 @@ function Signup() {
           </MDBContainer>
         </Navbar>
       <MDBRow className='d-flex justify-content-center align-items-center'>
-        <MDBCol col='10' md='6'>
-            <Camera imageUrl={imageUrl} setImageUrl={setImageUrl} />
+        <MDBCol col='10' md='6' className=''>
+            <div className='camera-sgn'>
+              <Camera imageUrl={imageUrl} setImageUrl={setImageUrl} boundingBox={boundingBox} />
+            </div>
+            
         </MDBCol>
         <MDBCol col='12'>
           {/* <div className="p-5 bg-image" style={{backgroundImage: 'url(https://mdbootstrap.com/img/new/textures/full/171.jpg)', height: '300px'}}></div> */}

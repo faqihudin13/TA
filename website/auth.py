@@ -17,9 +17,12 @@ auth = Blueprint('auth', __name__)
 def singleObject(data):
     data = {
         'email' : data.email,
+        'username':data.username,
+        'image':data.image
     }
 
     return data
+
 
 @auth.route('/facerecog', methods=['GET', 'POST'])
 def facerecog():
@@ -27,31 +30,37 @@ def facerecog():
         data_string = request.data.decode("UTF-8")
         data = ast.literal_eval(data_string)
         image = data['imageSrc']
-        image_output, name_output, signature_str=recog_face(image,username) 
+        email = data['email']   
+        user = User.query.filter_by(email=email).first()
+        signature_db =user.signature
+        image_output, facenet_score, result=recog_face(image,signature_db) 
+    return{'image':image_output,'facenet':facenet_score,'result':result}
+
+@auth.route('/facedetec', methods=['GET', 'POST'])
+def facedetec():
+    if request.method=='POST':
+        data_string = request.data.decode("UTF-8")
+        data = ast.literal_eval(data_string)
+        username = 'test'
+        image = data['image']
+        image_output, name_output, signature_str=train_face(image,username) 
         signature = str(signature_str)
-        print(image)
-    return{'status':True}
+    return{'image':image_output}
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-
     if request.method == 'POST':
         data_string = request.data.decode("UTF-8")
         data = ast.literal_eval(data_string)
         email = data['email']
         password = data['password']
-
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                #flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                # return {'status':True, 'message':'Berhasil'}
                 data_2 = singleObject(user)
-                # futuredates = datetime.now()+timedelta(days=7)
-                expires = datetime.timedelta(days=10)
-                expires_refresh = datetime.timedelta(days=10)
-        
+                expires = datetime.timedelta(minutes=60)
+                expires_refresh = datetime.timedelta(minutes=60)
                 acces_token = create_access_token(data_2, fresh=True, expires_delta= expires)
                 refresh_token = create_refresh_token(data_2, expires_delta=expires_refresh)
                 return response.success({
@@ -61,10 +70,8 @@ def login():
                     "refresh_token" : refresh_token,
                 }, "Sukses Login!")
             else:
-                #flash('Incorrect password, try again.', category='error')
                 return response.success({'status':False }, "Incorrect password, try again.") 
         else:
-            #flash('Email does not exist.', category='error')
             return response.success({'status':False }, "Email does not exist.")
 
     return response.success({'status':False }, '')
@@ -81,7 +88,6 @@ def sign_up():
     if request.method == 'POST':
         data_string = request.data.decode("UTF-8")
         data = ast.literal_eval(data_string)
-        print(data)
         username = data['username']
         email = data['email']
         image = data['imageUrl']
@@ -89,7 +95,6 @@ def sign_up():
         password2 = data['password2']
         image_output, name_output, signature_str=train_face(image,username) 
         signature = str(signature_str)
-
         user = User.query.filter_by(email=email).first()
         if user:
             return {'status':False, 'message':'Email already exists.'}
@@ -110,6 +115,5 @@ def sign_up():
             db.session.commit()
             login_user(new_user, remember=True)
             return {'status':True, 'message':'Account Created'}
-
     return {'status':False, 'message':''}
    

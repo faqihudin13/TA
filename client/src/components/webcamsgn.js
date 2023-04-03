@@ -4,12 +4,14 @@ import axios from "axios";
  
 const videoConstraints = {
   width: 540,
-  facingMode: "environment"
+  facingMode: "user",
+  mirrored : "false"
 };
  
 const Camera = (props) => {
   const { imageUrl, setImageUrl } = props;
-  
+  const [facedetec,setFacedetec]= useState('')
+  const boundingBox = "data:image/jpeg;base64,"+facedetec
   
   const webcamRef = useRef(null);
 
@@ -18,9 +20,9 @@ const Camera = (props) => {
     let image = imageSrc
     // console.log(image)
     // console.log(imageSrc)
-    axios.post('http://127.0.0.1:5000/facerecog', {image:imageSrc})
+    axios.post('http://127.0.0.1:5000/facedetec', {image:imageSrc})
       .then ( res => {
-        console.log(res.data)
+        setFacedetec(res.data.image)
         // setName(res.data)
 })
     .catch(error => {
@@ -46,7 +48,7 @@ const Camera = (props) => {
       <button onClick={() => setImageUrl(null)}>Refresh</button>
       {imageUrl && (
         <div>
-          <img src={imageUrl} alt="Screenshot" />
+          <img src={boundingBox} alt="Screenshot" />
           
         </div>
       )}
