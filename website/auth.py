@@ -30,6 +30,7 @@ def facerecog():
         data_string = request.data.decode("UTF-8")
         data = ast.literal_eval(data_string)
         image = data['imageSrc']
+<<<<<<< HEAD
         email = data['email']   
         user = User.query.filter_by(email=email).first()
         signature_db =user.signature
@@ -46,6 +47,14 @@ def facedetec():
         image_output, name_output, signature_str=train_face(image,username) 
         signature = str(signature_str)
     return{'image':image_output}
+=======
+        email = data['email']
+        user = User.query.filter_by(email=email).first()
+        signature_db =user.signature
+        print(signature_db)
+        image_output, facenet_score, result=recog_face(image,signature_db) 
+    return{'image':image_output,'facenet':facenet_score,'result':result}
+>>>>>>> cb1d21c55f8926b4aad98c5c052a1c1de7cfd1ca
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():

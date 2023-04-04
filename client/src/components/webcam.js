@@ -59,12 +59,13 @@ const WebcamCapture = () => {
   const card = localStorage.getItem('card')||false
   const Authenticated = localStorage.getItem('Authenticated');
     // console.log(isLogin)
+  if(isLogin === false) {
+    return <Navigate to='/login'/>
+  }  
   if(card===true){
     return <Navigate to='/card'/>
   }
-  if(isLogin === false) {
-    return <Navigate to='/login'/>
-  }
+  
   if (counter>5){
     const nicetry='Nice Try';
     console.log(nicetry)
