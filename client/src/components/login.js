@@ -60,7 +60,7 @@ function Login() {
     <MDBContainer fluid className='bg-image' >
       <Navbar className='bg-login' variant="dark">
           <MDBContainer>
-            <Navbar.Brand href="/home">SPBE</Navbar.Brand>
+            <Navbar.Brand href="/login">SPBE</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link href="/login">Login</Nav.Link>
               <Nav.Link href="/signup">Signup</Nav.Link>

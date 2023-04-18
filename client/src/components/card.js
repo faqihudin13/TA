@@ -51,7 +51,7 @@ const Card = () => {
         <div className='bg-container'>
           <Navbar className='bg-navbar' variant="dark">
             <Container>
-              <Navbar.Brand href="/home">SPBE</Navbar.Brand>
+              <Navbar.Brand href="/login">SPBE</Navbar.Brand>
               <Nav className="me-auto">
                 <Nav.Link href="/logout">Logout</Nav.Link>
               </Nav>
