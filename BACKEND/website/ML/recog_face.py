@@ -80,7 +80,8 @@ def recog_face (image, signature_db):
                 signature = facenet.predict(face)
                 signature = signature[0]
 
-                min_dist=0.7
+                threshold = 0.7
+                min_dist=threshold
                 identity=' '
                 # dist = np.linalg.norm(signature_db-signature)
                 dist = np.linalg.norm((signature_db-signature))
@@ -88,7 +89,7 @@ def recog_face (image, signature_db):
                     min_dist = dist
                     # identity = name
 
-                facenet_score = ((2*min_dist) - dist)/(2*min_dist)*100
+                facenet_score = ((2*threshold) - dist)/(2*threshold)*100
                 facenet_score = round(facenet_score, 2)
 
                 if (facenet_score < 50):
