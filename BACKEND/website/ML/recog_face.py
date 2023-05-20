@@ -89,7 +89,8 @@ def recog_face (image, signature_db):
                     min_dist = dist
                     # identity = name
 
-                facenet_score = ((2*threshold) - dist)/(2*threshold)*100
+                # anggap mencapai threshold artinya 90% presisi, berarti
+                facenet_score = ((10*threshold) - dist)/(10*threshold)*100
                 facenet_score = round(facenet_score, 2)
 
                 if (facenet_score < 50):
