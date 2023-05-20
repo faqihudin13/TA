@@ -24,7 +24,7 @@ def singleObject(data):
     return data
 
 
-@auth.route('/facerecog', methods=['GET', 'POST'])
+@auth.route('/facerecog', methods=['POST'])
 def facerecog():
     if request.method=='POST':
         data_string = request.data.decode("UTF-8")
@@ -47,7 +47,7 @@ def facedetec():
         signature = str(signature_str)
     return{'image':image_output}
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
         data_string = request.data.decode("UTF-8")
@@ -70,9 +70,9 @@ def login():
                     "refresh_token" : refresh_token,
                 }, "Sukses Login!")
             else:
-                return response.success({'status':False }, "Incorrect password, try again.") 
+                return response.success({'status':False }, 'Incorrect password please try again!') 
         else:
-            return response.success({'status':False }, "Email does not exist.")
+            return response.success({'status':False }, 'Email not match')
 
     return response.success({'status':False }, '')
 
@@ -83,7 +83,7 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
+@auth.route('/sign-up', methods=['POST'])
 def sign_up():
     if request.method == 'POST':
         data_string = request.data.decode("UTF-8")
@@ -97,17 +97,17 @@ def sign_up():
         signature = str(signature_str)
         user = User.query.filter_by(email=email).first()
         if user:
-            return {'status':False, 'message':'Email already exists.'}
-        elif len(username)<2 :
-            return{'status': False, 'message': 'username must be greater than 3 characters'}
-        elif len(email) < 4:
-            return {'status':False, 'message':'Email must be greater than 3 characters.'}
+            return {'status':False, 'message':'Email already exists'}
+        elif len(email) < 13:
+            return {'status':False, 'message':'Email must be greater than 12 characters'}
+        elif len(username)< 5 :
+            return{'status': False, 'message': 'Username must be greater than 4 characters'}
         elif len (image) < 3 :
             return{'status':False}
         elif password1 != password2:
-            return {'status':False, 'message':'Password Dont match.'}
+            return {'status':False, 'message':'Password Dont match'}
         elif len(password1) < 7:
-            return {'status':False, 'message':'Email already exists.'}
+            return {'status':False, 'message':'Password must be greater than 7 characters'}
         else:
             new_user = User(username=username,email=email,image=image,signature=signature, password=generate_password_hash(
                 password1, method='sha256'))
