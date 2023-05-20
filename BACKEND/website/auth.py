@@ -104,10 +104,10 @@ def sign_up():
             return{'status': False, 'message': 'Username must be greater than 4 characters'}
         elif len (image) < 3 :
             return{'status':False}
-        elif password1 != password2:
-            return {'status':False, 'message':'Password Dont match'}
         elif len(password1) < 7:
             return {'status':False, 'message':'Password must be greater than 7 characters'}
+        elif password1 != password2:
+            return {'status':False, 'message':'Password Dont match'}
         else:
             new_user = User(username=username,email=email,image=image,signature=signature, password=generate_password_hash(
                 password1, method='sha256'))
