@@ -88,7 +88,7 @@ def recog_face (image, signature_db):
                     min_dist = dist
                     # identity = name
 
-                facenet_score = ((2*min_dist) - dist)/(2*min_dist)*100
+                facenet_score = ((1.4 - dist)/1)*100
                 facenet_score = round(facenet_score, 2)
 
                 if (facenet_score < 50):
@@ -104,7 +104,7 @@ def recog_face (image, signature_db):
 
                 # name_output = name
 
-                if facenet_score >= 50:
+                if facenet_score > 80:
                     result = "true"
                 else:
                     result = "false"
